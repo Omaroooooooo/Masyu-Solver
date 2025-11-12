@@ -1,5 +1,5 @@
 public enum Type {
-    Black,
-    White,
-    None
+    NONE,
+    WHITE,
+    BLACK,
 }

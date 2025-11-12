@@ -1,18 +1,24 @@
 public enum Direction {
-    UP,
-    DOWN,
-    RIGHT,
-    LEFT;
+    UP(-1,0),
+    DOWN(1,0),
+    LEFT(0,-1),
+    RIGHT(0,1);
 
-    public Direction getOpposite() {
-        if (this == RIGHT) {
-            return LEFT;
-        } else if (this == LEFT) {
-            return RIGHT;
-        } else if (this == UP) {
-            return DOWN;
-        }
-        return UP;
+    public final int dx;
+    public final int dy;
+
+    Direction(int dx, int dy) {
+        this.dx = dx;
+        this.dy = dy;
+    }
+
+    public Direction opposite() {
+        return switch(this) {
+            case UP    -> DOWN;
+            case DOWN  -> UP;
+            case LEFT  -> RIGHT;
+            case RIGHT -> LEFT;
+        };
     }
 }
 

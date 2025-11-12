@@ -2,33 +2,35 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new FileReader("instances/janko/sample.txt"));
-        String[] size = reader.readLine().trim().split("\\s+");
-        int h = Integer.parseInt(size[0]);
-        int w = Integer.parseInt(size[1]);
-        Type[][] t = new Type[h][w];
-        for (int i = 0; i < h; i++) {
-            String line = reader.readLine().trim();
-            String[] tok = line.split("\\s+");
 
-            for (int j = 0; j < w; j++) {
-                switch (tok[j]) {
-                    case "w":
-                        t[i][j] = Type.White;
-                        break;
-                    case "b":
-                        t[i][j] = Type.Black;
-                        break;
-                    case "-":
-                    default:
-                        t[i][j] = Type.None;
-                        break;
-                }
+        BufferedReader br = new BufferedReader(new FileReader("instances/janko/sample4.txt"));
+        String[] s = br.readLine().trim().split("\\s+");
+        int h = Integer.parseInt(s[0]);
+        int w = Integer.parseInt(s[1]);
+
+        Type[][] t = new Type[h][w];
+        for(int i=0;i<h;i++){
+            String[] tok = br.readLine().trim().split("\\s+");
+            for(int j=0;j<w;j++){
+                t[i][j] = switch(tok[j]){
+                    case "b" -> Type.BLACK;
+                    case "w" -> Type.WHITE;
+                    default  -> Type.NONE;
+                };
             }
         }
-        reader.close();
-        Grid g = new Grid(h, w, t);
+
+        Grid g = new Grid(h,w,t);
+        long start = System.currentTimeMillis();
         g.solve();
-        System.out.println(g.lines);
+        long end = System.currentTimeMillis();
+
+        if(g.solved) {
+            System.out.println("Solved in " + (end - start) + " ms");
+            g.print();
+            // print edges
+        } else {
+            System.out.println("No solution.");
+        }
     }
 }
